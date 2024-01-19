@@ -9,8 +9,6 @@ symlinks=( \
 "${STORAGE}/logs"
 "${STORAGE}/app/public"
 "${STORAGE}/framework/views"
-"${STORAGE}/framework/cache"
-"${STORAGE}/framework/sessions"
 )
 
 shopt -s globstar dotglob
