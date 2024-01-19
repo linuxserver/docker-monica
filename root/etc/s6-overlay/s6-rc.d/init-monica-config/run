@@ -1,0 +1,134 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+MONICADIR=/app/www
+STORAGE="${MONICADIR}/storage"
+
+# Ensure storage directories are present
+symlinks=( \
+"${STORAGE}/logs"
+"${STORAGE}/app/public"
+"${STORAGE}/framework/views"
+"${STORAGE}/framework/cache"
+"${STORAGE}/framework/sessions"
+)
+
+shopt -s globstar dotglob
+
+for i in "${symlinks[@]}"; do
+    mkdir -p "${i}"
+    if [[ -d /config/www/"$(basename "$i")" && ! -L "$i"  ]]; then
+        rm -rf "$i"
+    fi
+    if [[ ! -d /config/www/"$(basename "$i")" && ! -L "$i"  ]]; then
+        mv "$i" /config/www/
+    fi
+    if [[ -d /config/www/"$(basename "$i")" && ! -L "$i"  ]]; then
+        ln -s /config/www/"$(basename "$i")" "$i"
+    fi
+done
+
+shopt -u globstar dotglob
+
+rm "${MONICADIR}/.env" 2>/dev/null
+ln -s "/config/www/.env" "${MONICADIR}/.env"
+
+lsiown -R abc:abc \
+    "${STORAGE}" \
+    "${MONICADIR}/bootstrap/cache" \
+    /config
+
+chmod -R g+rw ${STORAGE}
+
+# Run migrations
+cd "${MONICADIR}" || exit 1
+
+if [[ ! -f "/config/www/.env" ]]; then
+    cp /defaults/.env.sample /config/www/.env
+fi
+
+# Check for app key
+if [[ -z ${APP_KEY} ]]; then
+    if ! grep -E "APP_KEY=[0-9A-Za-z:+\/=]{1,}" /config/www/.env > /dev/null; then
+        php "${MONICADIR}/artisan" key:generate --no-interaction
+        echo "An application key was generated at start up, as no environment variable was set."
+    fi
+fi
+
+# if DB_PORT is not set
+if [[ -z "${DB_PORT}" ]]; then
+    DB_PORT="3306"
+fi
+
+if [[ -z "${DB_CONNECTION}" ]]; then
+    echo "**** No DB_CONNECTION configured, halting init ****"
+    sleep infinity
+elif [[ "${DB_CONNECTION}" = "sqlite" ]]; then
+    if [[ -n "${DB_DATABASE}" ]]; then
+        if [[ ! -e "${DB_DATABASE}" ]]; then
+            touch "${DB_DATABASE}"
+            lsiown abc:abc "${DB_DATABASE}"
+        fi
+        lsiown abc:abc "${DB_DATABASE}"
+    else
+        DB_DATABASE="/config/database.sqlite"
+        export DB_DATABASE
+        printf "/config/database.sqlite" > /var/run/s6/container_environment/DB_DATABASE
+    fi
+elif [[ "${DB_CONNECTION}" = "mysql" ]]; then
+    echo "Waiting for DB to be available"
+    END=$((SECONDS + 30))
+    while [[ ${SECONDS} -lt ${END} ]] && [[ -n "${DB_HOST+x}" ]]; do
+        if [[ $(/usr/bin/nc -w1 "${DB_HOST}" "${DB_PORT}" | tr -d '\0') ]]; then
+            if [[ -n "${RUN}" ]]; then
+                break
+            fi
+            RUN="RAN"
+            # we sleep here again due to first run init on DB containers
+            if [[ ! -f /dbwait.lock ]]; then
+                sleep 5
+            fi
+        else
+            sleep 1
+        fi
+    done
+elif [[ "${DB_CONNECTION}" = "pgsql" ]]; then
+    echo "Waiting for DB to be available"
+    END=$((SECONDS + 30))
+    while [[ ${SECONDS} -lt ${END} ]] && [[ -n "${DB_HOST+x}" ]]; do
+        if pg_isready -h "${DB_HOST}" -p "${DB_PORT}" -q; then
+            if [[ -n "${RUN}" ]]; then
+                break
+            fi
+            RUN="RAN"
+            # we sleep here again due to first run init on DB containers
+            if [[ ! -f /dbwait.lock ]]; then
+                sleep 5
+            fi
+        else
+            sleep 1
+        fi
+    done
+fi
+
+if [[ -n "${ADMIN_MAIL}" ]] && [[ -n "${ADMIN_PASS}" ]]; then
+    s6-setuidgid abc php ${MONICADIR}/artisan setup:production --force --email="${ADMIN_MAIL:-admin@example.com}" --password="${ADMIN_PASS:-admin}"
+fi
+
+# Run migrations
+s6-setuidgid abc php ${MONICADIR}/artisan monica:update --force
+
+if [[ ! -f "${STORAGE}/oauth-public.key" ]] || [[ ! -f "${STORAGE}/oauth-private.key" ]]; then
+    echo "Passport keys creation ..."
+    s6-setuidgid abc php ${MONICADIR}/artisan passport:keys
+    s6-setuidgid abc php ${MONICADIR}/artisan passport:client --personal --no-interaction
+    echo "! Please be careful to backup ${STORAGE}/oauth-public.key and ${STORAGE}/oauth-private.key files !"
+fi
+
+lsiown -R abc:abc \
+    "${STORAGE}" \
+    "${MONICADIR}/bootstrap/cache" \
+    /config
+
+# set lockfile to avoid DB waits for this specific container
+touch /dbwait.lock
