@@ -72,6 +72,8 @@ elif [[ "${DB_CONNECTION}" = "sqlite" ]]; then
         lsiown abc:abc "${DB_DATABASE}"
     else
         DB_DATABASE="/config/database.sqlite"
+        touch "${DB_DATABASE}"
+        lsiown abc:abc "${DB_DATABASE}"
         export DB_DATABASE
         printf "/config/database.sqlite" > /var/run/s6/container_environment/DB_DATABASE
     fi
