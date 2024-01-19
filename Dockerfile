@@ -26,8 +26,6 @@ RUN \
     php82-pecl-memcached \
     php82-mysqli \
     php82-pdo_mysql \
-    php82-pdo_pgsql \
-    php82-pgsql \
     php82-redis \
     php82-sodium \
     php82-soap \
