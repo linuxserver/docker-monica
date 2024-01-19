@@ -37,7 +37,6 @@ Find us at:
 [![Docker Pulls](https://img.shields.io/docker/pulls/linuxserver/Monica.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=pulls&logo=docker)](https://hub.docker.com/r/linuxserver/Monica)
 [![Docker Stars](https://img.shields.io/docker/stars/linuxserver/Monica.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=stars&logo=docker)](https://hub.docker.com/r/linuxserver/Monica)
 [![Jenkins Build](https://img.shields.io/jenkins/build?labelColor=555555&logoColor=ffffff&style=for-the-badge&jobUrl=https%3A%2F%2Fci.linuxserver.io%2Fjob%2FDocker-Pipeline-Builders%2Fjob%2Fdocker-Monica%2Fjob%2Fmain%2F&logo=jenkins)](https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-Monica/job/main/)
-[![LSIO CI](https://img.shields.io/badge/dynamic/yaml?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=CI&query=CI&url=https%3A%2F%2Fci-tests.linuxserver.io%2Flinuxserver%2FMonica%2Flatest%2Fci-status.yml)](https://ci-tests.linuxserver.io/linuxserver/Monica/latest/index.html)
 
 [Monica](https://github.com/monicahq/monica) is an open source personal relationship management system, that lets you document your life.
 
