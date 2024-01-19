@@ -58,24 +58,7 @@ if [[ -z "${DB_PORT}" ]]; then
     DB_PORT="3306"
 fi
 
-if [[ -z "${DB_CONNECTION}" ]]; then
-    echo "**** No DB_CONNECTION configured, halting init ****"
-    sleep infinity
-elif [[ "${DB_CONNECTION}" = "sqlite" ]]; then
-    if [[ -n "${DB_DATABASE}" ]]; then
-        if [[ ! -e "${DB_DATABASE}" ]]; then
-            touch "${DB_DATABASE}"
-            lsiown abc:abc "${DB_DATABASE}"
-        fi
-        lsiown abc:abc "${DB_DATABASE}"
-    else
-        DB_DATABASE="/config/database.sqlite"
-        touch "${DB_DATABASE}"
-        lsiown abc:abc "${DB_DATABASE}"
-        export DB_DATABASE
-        printf "/config/database.sqlite" > /var/run/s6/container_environment/DB_DATABASE
-    fi
-elif [[ "${DB_CONNECTION}" = "mysql" ]]; then
+if [[ -n "${DB_HOST}" ]]; then
     echo "Waiting for DB to be available"
     END=$((SECONDS + 30))
     while [[ ${SECONDS} -lt ${END} ]] && [[ -n "${DB_HOST+x}" ]]; do
@@ -92,23 +75,9 @@ elif [[ "${DB_CONNECTION}" = "mysql" ]]; then
             sleep 1
         fi
     done
-elif [[ "${DB_CONNECTION}" = "pgsql" ]]; then
-    echo "Waiting for DB to be available"
-    END=$((SECONDS + 30))
-    while [[ ${SECONDS} -lt ${END} ]] && [[ -n "${DB_HOST+x}" ]]; do
-        if pg_isready -h "${DB_HOST}" -p "${DB_PORT}" -q; then
-            if [[ -n "${RUN}" ]]; then
-                break
-            fi
-            RUN="RAN"
-            # we sleep here again due to first run init on DB containers
-            if [[ ! -f /dbwait.lock ]]; then
-                sleep 5
-            fi
-        else
-            sleep 1
-        fi
-    done
+else
+    echo "No database hostname specified, halting init."
+    sleep infinity
 fi
 
 if [[ -n "${ADMIN_MAIL}" ]] && [[ -n "${ADMIN_PASS}" ]]; then

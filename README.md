@@ -41,7 +41,7 @@ Find us at:
 
 [Monica](https://github.com/monicahq/monica) is an open source personal relationship management system, that lets you document your life.
 
-[![Monica](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/phpmyadmin-logo.png)](https://github.com/monicahq/monica)
+[![Monica](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/monica-logo.png)](https://github.com/monicahq/monica)
 
 ## Supported Architectures
 
@@ -79,7 +79,6 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-      - DB_CONNECTION=
       - DB_HOST=
       - DB_PORT=
       - DB_USERNAME=
@@ -102,7 +101,6 @@ docker run -d \
   -e PUID=1000 \
   -e PGID=1000 \
   -e TZ=Etc/UTC \
-  -e DB_CONNECTION= \
   -e DB_HOST= \
   -e DB_PORT= \
   -e DB_USERNAME= \
@@ -126,12 +124,11 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e PUID=1000` | for UserID - see below for explanation |
 | `-e PGID=1000` | for GroupID - see below for explanation |
 | `-e TZ=Etc/UTC` | specify a timezone to use, see this [list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List). |
-| `-e DB_CONNECTION=` | DB type, from `sqlite`, `mysql`. |
-| `-e DB_HOST=` | DB server hostname. For `mysql` only. |
-| `-e DB_PORT=` | DB server port. For `mysql` only. |
-| `-e DB_USERNAME=` | DB user. For `mysql` only. |
-| `-e DB_PASSWORD=` | DB password. For `mysql` only. |
-| `-e DB_DATABASE=` | Path to DB file for `sqlite`. DB name for `mysql`. |
+| `-e DB_HOST=` | Mariadb DB server hostname. |
+| `-e DB_PORT=` | Mariadb DB server port. |
+| `-e DB_USERNAME=` | Mariadb DB user. |
+| `-e DB_PASSWORD=` | Mariadb DB password. |
+| `-e DB_DATABASE=` | Mariadb DB name. |
 | `-e APP_URL=` | The URL you will use to access Monica including protocol, and port where appropriate. |
 | `-e TRUSTED_PROXIES=` | Set to the IP or netmask covering your reverse proxy, if running behind one. Set to `*` to trust all IPs (**do not** use `*` if exposed to the internet`). |
 | `-v /config` | Persistent config files. |

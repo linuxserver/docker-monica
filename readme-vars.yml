@@ -25,12 +25,11 @@ param_ports:
   - { external_port: "80", internal_port: "80", port_desc: "http gui" }
 param_usage_include_env: true
 param_env_vars:
-  - { env_var: "DB_CONNECTION", env_value: "", desc: "DB type, from `sqlite`, `mysql`." }
-  - { env_var: "DB_HOST", env_value: "", desc: "DB server hostname. For `mysql` only." }
-  - { env_var: "DB_PORT", env_value: "", desc: "DB server port. For `mysql` only." }
-  - { env_var: "DB_USERNAME", env_value: "", desc: "DB user. For `mysql` only." }
-  - { env_var: "DB_PASSWORD", env_value: "", desc: "DB password. For `mysql` only." }
-  - { env_var: "DB_DATABASE", env_value: "", desc: "Path to DB file for `sqlite`. DB name for `mysql`." }
+  - { env_var: "DB_HOST", env_value: "", desc: "Mariadb DB server hostname." }
+  - { env_var: "DB_PORT", env_value: "", desc: "Mariadb DB server port." }
+  - { env_var: "DB_USERNAME", env_value: "", desc: "Mariadb DB user." }
+  - { env_var: "DB_PASSWORD", env_value: "", desc: "Mariadb DB password." }
+  - { env_var: "DB_DATABASE", env_value: "", desc: "Mariadb DB name." }
 
 opt_param_usage_include_env: true
 opt_param_env_vars:
