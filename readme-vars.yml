@@ -23,6 +23,7 @@ param_volumes:
 param_usage_include_ports: true
 param_ports:
   - { external_port: "80", internal_port: "80", port_desc: "http gui" }
+  - { external_port: "443", internal_port: "443", port_desc: "https gui" }
 param_usage_include_env: true
 param_env_vars:
   - { env_var: "DB_HOST", env_value: "", desc: "Mariadb DB server hostname." }
@@ -33,8 +34,9 @@ param_env_vars:
 
 opt_param_usage_include_env: true
 opt_param_env_vars:
-  - { env_var: "APP_URL", env_value: "", desc: "The URL you will use to access Monica including protocol, and port where appropriate." }
+  - { env_var: "APP_URL", env_value: "http://localhost:80", desc: "The URL you will use to access Monica including protocol, and port where appropriate." }
   - { env_var: "TRUSTED_PROXIES", env_value: "", desc: "Set to the IP or netmask covering your reverse proxy, if running behind one. Set to `*` to trust all IPs (**do not** use `*` if exposed to the internet`)." }
+  - { env_var: "APP_ENV", env_value: "local", desc: "Set to `production` when exposing the container to anyone else; this also makes https mandatory." }
 
 # application setup block
 app_setup_block_enabled: true
