@@ -80,10 +80,6 @@ else
     sleep infinity
 fi
 
-if [[ -n "${ADMIN_MAIL}" ]] && [[ -n "${ADMIN_PASS}" ]]; then
-    s6-setuidgid abc php ${MONICADIR}/artisan setup:production --force --email="${ADMIN_MAIL:-admin@example.com}" --password="${ADMIN_PASS:-admin}"
-fi
-
 # Run migrations
 s6-setuidgid abc php ${MONICADIR}/artisan monica:update --force
 
