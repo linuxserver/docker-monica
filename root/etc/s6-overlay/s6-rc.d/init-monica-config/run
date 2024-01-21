@@ -83,15 +83,6 @@ fi
 # Run migrations
 s6-setuidgid abc php ${MONICADIR}/artisan monica:update --force
 
-if [[ ! -f "/config/www/oauth-public.key" ]] || [[ ! -f "/config/www/oauth-private.key" ]]; then
-    echo "Passport keys creation ..."
-    s6-setuidgid abc php ${MONICADIR}/artisan passport:keys
-    s6-setuidgid abc php ${MONICADIR}/artisan passport:client --personal --no-interaction
-    echo "! Please be careful to backup /config/www/oauth-public.key and /config/www/oauth-private.key files !"
-else
-    echo "! Please be careful to backup /config/www/oauth-public.key and /config/www/oauth-private.key files !"
-fi
-
 symlinks=( \
 "${STORAGE}/oauth-private.key"
 "${STORAGE}/oauth-public.key"
@@ -100,19 +91,24 @@ symlinks=( \
 shopt -s globstar dotglob
 
 for i in "${symlinks[@]}"; do
-    mkdir -p "${i}"
-    if [[ -d /config/www/"$(basename "$i")" && ! -L "$i"  ]]; then
+    if [[ -f /config/www/"$(basename "$i")" && ! -L "$i"  ]]; then
         rm -rf "$i"
     fi
-    if [[ ! -d /config/www/"$(basename "$i")" && ! -L "$i"  ]]; then
+    if [[ ! -f /config/www/"$(basename "$i")" && ! -L "$i"  ]]; then
         mv "$i" /config/www/
     fi
-    if [[ -d /config/www/"$(basename "$i")" && ! -L "$i"  ]]; then
+    if [[ -f /config/www/"$(basename "$i")" && ! -L "$i"  ]]; then
         ln -s /config/www/"$(basename "$i")" "$i"
     fi
 done
 
 shopt -u globstar dotglob
+
+if [[ ! -f "/config/www/oauth-public.key" ]] || [[ ! -f "/config/www/oauth-private.key" ]]; then
+    echo "Oauth passport keys creation ..."
+    s6-setuidgid abc php ${MONICADIR}/artisan passport:keys
+    s6-setuidgid abc php ${MONICADIR}/artisan passport:client --personal --no-interaction
+fi
 
 lsiown -R abc:abc \
     "${STORAGE}" \
