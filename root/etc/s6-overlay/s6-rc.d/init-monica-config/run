@@ -1,0 +1,119 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+MONICADIR=/app/www
+STORAGE="${MONICADIR}/storage"
+
+# Ensure storage directories are present
+symlinks=( \
+"${STORAGE}/logs"
+"${STORAGE}/app/public"
+"${STORAGE}/framework/views"
+)
+
+shopt -s globstar dotglob
+
+for i in "${symlinks[@]}"; do
+    mkdir -p "${i}"
+    if [[ -d /config/www/"$(basename "$i")" && ! -L "$i"  ]]; then
+        rm -rf "$i"
+    fi
+    if [[ ! -d /config/www/"$(basename "$i")" && ! -L "$i"  ]]; then
+        mv "$i" /config/www/
+    fi
+    if [[ -d /config/www/"$(basename "$i")" && ! -L "$i"  ]]; then
+        ln -s /config/www/"$(basename "$i")" "$i"
+    fi
+done
+
+shopt -u globstar dotglob
+
+rm "${MONICADIR}/.env" 2>/dev/null
+ln -s "/config/www/.env" "${MONICADIR}/.env"
+
+lsiown -R abc:abc \
+    "${STORAGE}" \
+    "${MONICADIR}/bootstrap/cache" \
+    /config
+
+chmod -R g+rw ${STORAGE}
+
+# Run migrations
+cd "${MONICADIR}" || exit 1
+
+if [[ ! -f "/config/www/.env" ]]; then
+    cp /defaults/.env.sample /config/www/.env
+fi
+
+# Check for app key
+if [[ -z ${APP_KEY} ]]; then
+    if ! grep -E "APP_KEY=[0-9A-Za-z:+\/=]{1,}" /config/www/.env > /dev/null; then
+        php "${MONICADIR}/artisan" key:generate --no-interaction
+        echo "An application key was generated at start up, as no environment variable was set."
+    fi
+fi
+
+# if DB_PORT is not set
+if [[ -z "${DB_PORT}" ]]; then
+    DB_PORT="3306"
+fi
+
+if [[ -n "${DB_HOST}" ]]; then
+    echo "Waiting for DB to be available"
+    END=$((SECONDS + 30))
+    while [[ ${SECONDS} -lt ${END} ]] && [[ -n "${DB_HOST+x}" ]]; do
+        if [[ $(/usr/bin/nc -w1 "${DB_HOST}" "${DB_PORT}" | tr -d '\0') ]]; then
+            if [[ -n "${RUN}" ]]; then
+                break
+            fi
+            RUN="RAN"
+            # we sleep here again due to first run init on DB containers
+            if [[ ! -f /dbwait.lock ]]; then
+                sleep 5
+            fi
+        else
+            sleep 1
+        fi
+    done
+else
+    echo "No database hostname specified, halting init."
+    sleep infinity
+fi
+
+# Run migrations
+s6-setuidgid abc php ${MONICADIR}/artisan monica:update --force
+
+symlinks=( \
+"${STORAGE}/oauth-private.key"
+"${STORAGE}/oauth-public.key"
+)
+
+shopt -s globstar dotglob
+
+for i in "${symlinks[@]}"; do
+    if [[ -f /config/www/"$(basename "$i")" && ! -L "$i"  ]]; then
+        rm -rf "$i"
+    fi
+    if [[ ! -f /config/www/"$(basename "$i")" && ! -L "$i"  ]]; then
+        mv "$i" /config/www/
+    fi
+    if [[ -f /config/www/"$(basename "$i")" && ! -L "$i"  ]]; then
+        ln -s /config/www/"$(basename "$i")" "$i"
+    fi
+done
+
+shopt -u globstar dotglob
+
+if [[ ! -f "/config/www/oauth-public.key" ]] || [[ ! -f "/config/www/oauth-private.key" ]]; then
+    echo "Oauth passport keys creation ..."
+    s6-setuidgid abc php ${MONICADIR}/artisan passport:keys
+    s6-setuidgid abc php ${MONICADIR}/artisan passport:client --personal --no-interaction
+fi
+
+lsiown -R abc:abc \
+    "${STORAGE}" \
+    "${MONICADIR}/bootstrap/cache" \
+    /config
+
+# set lockfile to avoid DB waits for this specific container
+touch /dbwait.lock

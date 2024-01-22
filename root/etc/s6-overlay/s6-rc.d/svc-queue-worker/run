@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+exec s6-setuidgid abc /usr/bin/php /app/www/artisan queue:work --sleep=10 --timeout=0 --tries=3
