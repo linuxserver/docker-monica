@@ -1,7 +1,7 @@
 ---
 
 # project information
-project_name: Monica
+project_name: monica
 project_url: "https://github.com/monicahq/monica"
 project_logo: "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/monica-logo.png"
 project_blurb: |
