@@ -492,9 +492,9 @@ pipeline {
         sh "docker buildx build \
           --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
           --label \"org.opencontainers.image.authors=linuxserver.io\" \
-          --label \"org.opencontainers.image.url=https://github.com/linuxserver/docker-Monica/packages\" \
-          --label \"org.opencontainers.image.documentation=https://docs.linuxserver.io/images/docker-Monica\" \
-          --label \"org.opencontainers.image.source=https://github.com/linuxserver/docker-Monica\" \
+          --label \"org.opencontainers.image.url=https://github.com/linuxserver/docker-monica/packages\" \
+          --label \"org.opencontainers.image.documentation=https://docs.linuxserver.io/images/docker-monica\" \
+          --label \"org.opencontainers.image.source=https://github.com/linuxserver/docker-monica\" \
           --label \"org.opencontainers.image.version=${EXT_RELEASE_CLEAN}-ls${LS_TAG_NUMBER}\" \
           --label \"org.opencontainers.image.revision=${COMMIT_SHA}\" \
           --label \"org.opencontainers.image.vendor=linuxserver.io\" \
@@ -523,9 +523,9 @@ pipeline {
             sh "docker buildx build \
               --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
               --label \"org.opencontainers.image.authors=linuxserver.io\" \
-              --label \"org.opencontainers.image.url=https://github.com/linuxserver/docker-Monica/packages\" \
-              --label \"org.opencontainers.image.documentation=https://docs.linuxserver.io/images/docker-Monica\" \
-              --label \"org.opencontainers.image.source=https://github.com/linuxserver/docker-Monica\" \
+              --label \"org.opencontainers.image.url=https://github.com/linuxserver/docker-monica/packages\" \
+              --label \"org.opencontainers.image.documentation=https://docs.linuxserver.io/images/docker-monica\" \
+              --label \"org.opencontainers.image.source=https://github.com/linuxserver/docker-monica\" \
               --label \"org.opencontainers.image.version=${EXT_RELEASE_CLEAN}-ls${LS_TAG_NUMBER}\" \
               --label \"org.opencontainers.image.revision=${COMMIT_SHA}\" \
               --label \"org.opencontainers.image.vendor=linuxserver.io\" \
@@ -551,9 +551,9 @@ pipeline {
             sh "docker buildx build \
               --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
               --label \"org.opencontainers.image.authors=linuxserver.io\" \
-              --label \"org.opencontainers.image.url=https://github.com/linuxserver/docker-Monica/packages\" \
-              --label \"org.opencontainers.image.documentation=https://docs.linuxserver.io/images/docker-Monica\" \
-              --label \"org.opencontainers.image.source=https://github.com/linuxserver/docker-Monica\" \
+              --label \"org.opencontainers.image.url=https://github.com/linuxserver/docker-monica/packages\" \
+              --label \"org.opencontainers.image.documentation=https://docs.linuxserver.io/images/docker-monica\" \
+              --label \"org.opencontainers.image.source=https://github.com/linuxserver/docker-monica\" \
               --label \"org.opencontainers.image.version=${EXT_RELEASE_CLEAN}-ls${LS_TAG_NUMBER}\" \
               --label \"org.opencontainers.image.revision=${COMMIT_SHA}\" \
               --label \"org.opencontainers.image.vendor=linuxserver.io\" \
