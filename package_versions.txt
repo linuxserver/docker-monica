@@ -5,8 +5,8 @@ alpine-baselayout-data                   3.4.3-r1                apk
 alpine-keys                              2.4-r1                  apk             
 alpine-release                           3.18.6-r0               apk             
 aom-libs                                 3.6.1-r0                apk             
-apache2-utils                            2.4.58-r0               apk             
-apk-tools                                2.14.0-r2               apk             
+apache2-utils                            2.4.59-r0               apk             
+apk-tools                                2.14.3-r1               apk             
 apr                                      1.7.4-r0                apk             
 apr-util                                 1.6.3-r1                apk             
 argon2-libs                              20190702-r4             apk             
@@ -87,7 +87,7 @@ libavif                                  0.11.1-r2               apk
 libbsd                                   0.11.7-r1               apk             
 libbz2                                   1.0.8-r5                apk             
 libc-utils                               0.7.2-r5                apk             
-libcrypto3                               3.1.4-r5                apk             
+libcrypto3                               3.1.4-r6                apk             
 libcurl                                  8.5.0-r0                apk             
 libdav1d                                 1.2.1-r0                apk             
 libedit                                  20221030.3.1-r1         apk             
@@ -108,7 +108,7 @@ libsasl                                  2.1.28-r4               apk
 libseccomp                               2.5.4-r2                apk             
 libsm                                    1.2.4-r1                apk             
 libsodium                                1.0.18-r3               apk             
-libssl3                                  3.1.4-r5                apk             
+libssl3                                  3.1.4-r6                apk             
 libstdc++                                12.2.1_git20220924-r10  apk             
 libunistring                             1.1-r1                  apk             
 libuuid                                  2.38.1-r8               apk             
@@ -150,7 +150,7 @@ nunomaduro/termwind                      v1.15.0                 php-composer
 nyholm/psr7                              1.5.1                   php-composer    
 ok/ipstack-client                        2.1                     php-composer    
 oniguruma                                6.9.8-r1                apk             
-openssl                                  3.1.4-r5                apk             
+openssl                                  3.1.4-r6                apk             
 paragonie/constant_time_encoding         v2.6.3                  php-composer    
 paragonie/random_compat                  v9.99.100               php-composer    
 pcre                                     8.45-r3                 apk             
