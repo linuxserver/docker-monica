@@ -23,7 +23,7 @@ busybox-binsh                            1.36.1-r5               apk
 ca-certificates                          20240226-r0             apk             
 ca-certificates-bundle                   20240226-r0             apk             
 clue/stream-filter                       v1.6.0                  php-composer    
-composer                                 2.7.2                   binary          
+composer                                 2.7.4                   binary          
 composer/ca-bundle                       1.3.5                   php-composer    
 coreutils                                9.3-r2                  apk             
 creativeorange/gravatar                  v1.0.22                 php-composer    
