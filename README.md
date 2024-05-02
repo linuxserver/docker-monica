@@ -302,4 +302,5 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **02.05.24:** - Rebase to Alpine 3.19 and PHP 8.3.
 * **17.01.24:** - Initial Release.
