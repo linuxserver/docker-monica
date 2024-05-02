@@ -48,4 +48,5 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "02.05.24:", desc: "Rebase to Alpine 3.19 and PHP 8.3." }
   - { date: "17.01.24:", desc: "Initial Release." }
