@@ -1,10 +1,10 @@
-FROM ghcr.io/linuxserver/baseimage-alpine-nginx:arm64v8-3.18
+FROM ghcr.io/linuxserver/baseimage-alpine-nginx:arm64v8-3.19
 
 ARG BUILD_DATE
 ARG VERSION
 ARG MONICA_VERSION
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="TheSpad"
+LABEL maintainer="thespad"
 ARG MONICA_RELEASE_GPG_KEY="BDAB0D0D36A00466A2964E85DE15667131EA6018"
 ENV MEMORY_LIMIT 512M
 
@@ -18,25 +18,25 @@ RUN \
     gnupg && \
   apk add --no-cache \
     memcached \
-    php82-apcu \
-    php82-bcmath \
-    php82-dom \
-    php82-gd \
-    php82-gmp \
-    php82-intl \
-    php82-pecl-memcached \
-    php82-mysqli \
-    php82-pdo_mysql \
-    php82-redis \
-    php82-sodium \
-    php82-soap \
-    php82-tokenizer \
-    php82-xmlreader \
+    php83-apcu \
+    php83-bcmath \
+    php83-dom \
+    php83-gd \
+    php83-gmp \
+    php83-intl \
+    php83-pecl-memcached \
+    php83-mysqli \
+    php83-pdo_mysql \
+    php83-redis \
+    php83-sodium \
+    php83-soap \
+    php83-tokenizer \
+    php83-xmlreader \
     postgresql15-client && \
   echo "**** configure php-fpm to pass env vars ****" && \
-  sed -E -i 's/^;?clear_env ?=.*$/clear_env = no/g' /etc/php82/php-fpm.d/www.conf && \
-  grep -qxF 'clear_env = no' /etc/php82/php-fpm.d/www.conf || echo 'clear_env = no' >> /etc/php82/php-fpm.d/www.conf && \
-  echo "env[PATH] = /usr/local/bin:/usr/bin:/bin:/" >> /etc/php82/php-fpm.conf && \
+  sed -E -i 's/^;?clear_env ?=.*$/clear_env = no/g' /etc/php83/php-fpm.d/www.conf && \
+  grep -qxF 'clear_env = no' /etc/php83/php-fpm.d/www.conf || echo 'clear_env = no' >> /etc/php83/php-fpm.d/www.conf && \
+  echo "env[PATH] = /usr/local/bin:/usr/bin:/bin:/" >> /etc/php83/php-fpm.conf && \
   echo "**** setup php opcache ****" && \
   { \
       echo '[opcache]'; \
@@ -48,13 +48,13 @@ RUN \
       echo 'opcache.max_wasted_percentage=10'; \
       echo 'opcache.interned_strings_buffer=16'; \
       echo 'opcache.fast_shutdown=1'; \
-  } > /etc/php82/conf.d/opcache-recommended.ini; \
+  } > /etc/php83/conf.d/opcache-recommended.ini; \
   \
-  echo 'apc.enable_cli=1' >> /etc/php82/conf.d/docker-php-ext-apcu.ini; \
+  echo 'apc.enable_cli=1' >> /etc/php83/conf.d/docker-php-ext-apcu.ini; \
   \
   { \
       echo 'memory_limit=${MEMORY_LIMIT}'; \
-  } > /etc/php82/conf.d/memory-limit.ini && \
+  } > /etc/php83/conf.d/memory-limit.ini && \
   echo "**** install monica ****" && \
   mkdir -p /app/www && \
   if [ -z ${MONICA_VERSION+x} ]; then \
