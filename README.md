@@ -302,5 +302,6 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **27.05.24:** - Rebase to Alpine 3.20. Existing users should update: site-confs/default.conf to avoid http2 deprecation warnings.
 * **02.05.24:** - Rebase to Alpine 3.19 and PHP 8.3.
 * **17.01.24:** - Initial Release.

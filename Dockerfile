@@ -1,4 +1,4 @@
-FROM ghcr.io/linuxserver/baseimage-alpine-nginx:3.19
+FROM ghcr.io/linuxserver/baseimage-alpine-nginx:3.20
 
 ARG BUILD_DATE
 ARG VERSION
@@ -82,6 +82,7 @@ RUN \
   composer install \
     --no-dev \
     --no-interaction && \
+  printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
   echo "**** cleanup ****" && \
   apk del --purge \
     build-dependencies && \
