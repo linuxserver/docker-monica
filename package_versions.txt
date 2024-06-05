@@ -156,7 +156,7 @@ netcat-openbsd                           1.226-r0               apk
 nette/schema                             v1.3.0                 php-composer    
 nette/utils                              v4.0.4                 php-composer    
 nghttp2-libs                             1.62.0-r0              apk             
-nginx                                    1.26.0-r2              apk             
+nginx                                    1.26.1-r0              apk             
 nunomaduro/termwind                      v1.15.1                php-composer    
 nyholm/psr7                              1.8.1                  php-composer    
 ok/ipstack-client                        2.1                    php-composer    
@@ -197,7 +197,7 @@ php83-pdo_mysql                          8.3.7-r0               apk
 php83-pecl-apcu                          5.1.23-r0              apk             
 php83-pecl-igbinary                      3.2.15-r0              apk             
 php83-pecl-memcached                     3.2.0-r0               apk             
-php83-pecl-msgpack                       2.2.0-r1               apk             
+php83-pecl-msgpack                       2.2.0-r2               apk             
 php83-pecl-redis                         6.0.2-r0               apk             
 php83-phar                               8.3.7-r0               apk             
 php83-session                            8.3.7-r0               apk             
