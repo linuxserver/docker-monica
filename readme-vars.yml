@@ -6,48 +6,101 @@ project_url: "https://github.com/monicahq/monica"
 project_logo: "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/monica-logo.png"
 project_blurb: |
   [{{ project_name|capitalize }}]({{ project_url }}) is an open source personal relationship management system, that lets you document your life.
-
 project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_name }}"
-
 # supported architectures
 available_architectures:
-  - { arch: "{{ arch_x86_64 }}", tag: "amd64-latest"}
-  - { arch: "{{ arch_arm64 }}", tag: "arm64v8-latest"}
-
+  - {arch: "{{ arch_x86_64 }}", tag: "amd64-latest"}
+  - {arch: "{{ arch_arm64 }}", tag: "arm64v8-latest"}
 # container parameters
 common_param_env_vars_enabled: true
 param_container_name: "{{ project_name }}"
 param_usage_include_vols: true
 param_volumes:
-  - { vol_path: "/config", vol_host_path: "/path/to/{{ project_name }}/config", desc: "Persistent config files." }
+  - {vol_path: "/config", vol_host_path: "/path/to/{{ project_name }}/config", desc: "Persistent config files."}
 param_usage_include_ports: true
 param_ports:
-  - { external_port: "80", internal_port: "80", port_desc: "http gui" }
-  - { external_port: "443", internal_port: "443", port_desc: "https gui" }
+  - {external_port: "80", internal_port: "80", port_desc: "http gui"}
+  - {external_port: "443", internal_port: "443", port_desc: "https gui"}
 param_usage_include_env: true
 param_env_vars:
-  - { env_var: "DB_HOST", env_value: "", desc: "Mariadb DB server hostname." }
-  - { env_var: "DB_PORT", env_value: "", desc: "Mariadb DB server port." }
-  - { env_var: "DB_USERNAME", env_value: "", desc: "Mariadb DB user." }
-  - { env_var: "DB_PASSWORD", env_value: "", desc: "Mariadb DB password." }
-  - { env_var: "DB_DATABASE", env_value: "", desc: "Mariadb DB name." }
-
+  - {env_var: "DB_HOST", env_value: "", desc: "Mariadb DB server hostname."}
+  - {env_var: "DB_PORT", env_value: "", desc: "Mariadb DB server port."}
+  - {env_var: "DB_USERNAME", env_value: "", desc: "Mariadb DB user."}
+  - {env_var: "DB_PASSWORD", env_value: "", desc: "Mariadb DB password."}
+  - {env_var: "DB_DATABASE", env_value: "", desc: "Mariadb DB name."}
 opt_param_usage_include_env: true
 opt_param_env_vars:
-  - { env_var: "APP_URL", env_value: "http://localhost:80", desc: "The URL you will use to access Monica including protocol, and port where appropriate." }
-  - { env_var: "TRUSTED_PROXIES", env_value: "", desc: "Set to the IP or netmask covering your reverse proxy, if running behind one. Set to `*` to trust all IPs (**do not** use `*` if exposed to the internet`)." }
-  - { env_var: "APP_ENV", env_value: "local", desc: "Set to `production` when exposing the container to anyone else; this also makes https mandatory." }
-  - { env_var: "APP_DISABLE_SIGNUP", env_value: "true", desc: "Set to `false` to enable new account sign-ups." }
-
+  - {env_var: "APP_URL", env_value: "http://localhost:80", desc: "The URL you will use to access Monica including protocol, and port where appropriate."}
+  - {env_var: "TRUSTED_PROXIES", env_value: "", desc: "Set to the IP or netmask covering your reverse proxy, if running behind one. Set to `*` to trust all IPs (**do not** use `*` if exposed to the internet`)."}
+  - {env_var: "APP_ENV", env_value: "local", desc: "Set to `production` when exposing the container to anyone else; this also makes https mandatory."}
+  - {env_var: "APP_DISABLE_SIGNUP", env_value: "true", desc: "Set to `false` to enable new account sign-ups."}
 # application setup block
 app_setup_block_enabled: true
 app_setup_block: |
   Setup account via the webui, accessible at http://SERVERIP:PORT
 
   For more info see the [Monica documentation]({{ project_url }}).
-
+# init diagram
+init_diagram: |
+  "monica:latest": {
+    docker-mods
+    base {
+      fix-attr +\nlegacy cont-init
+    }
+    docker-mods -> base
+    legacy-services
+    custom services
+    init-services -> legacy-services
+    init-services -> custom services
+    custom services -> legacy-services
+    legacy-services -> ci-service-check
+    init-migrations -> init-adduser
+    init-nginx-end -> init-config
+    init-os-end -> init-config
+    init-config -> init-config-end
+    init-monica-config -> init-config-end
+    init-os-end -> init-crontab-config
+    init-mods-end -> init-custom-files
+    base -> init-envfile
+    init-os-end -> init-folders
+    init-php -> init-keygen
+    base -> init-migrations
+    base -> init-mods
+    init-config-end -> init-mods
+    init-version-checks -> init-mods
+    init-mods -> init-mods-end
+    init-mods-package-install -> init-mods-end
+    init-mods -> init-mods-package-install
+    init-nginx-end -> init-monica-config
+    init-samples -> init-nginx
+    init-permissions -> init-nginx-end
+    base -> init-os-end
+    init-adduser -> init-os-end
+    init-envfile -> init-os-end
+    init-migrations -> init-os-end
+    init-keygen -> init-permissions
+    init-nginx -> init-php
+    init-folders -> init-samples
+    init-custom-files -> init-services
+    init-mods-end -> init-services
+    init-config-end -> init-version-checks
+    init-services -> svc-cron
+    svc-cron -> legacy-services
+    init-services -> svc-memcached
+    svc-memcached -> legacy-services
+    init-services -> svc-nginx
+    svc-nginx -> legacy-services
+    init-services -> svc-php-fpm
+    svc-php-fpm -> legacy-services
+    init-services -> svc-queue-worker
+    svc-queue-worker -> legacy-services
+  }
+  Base Images: {
+    "baseimage-alpine-nginx:3.20" <- "baseimage-alpine:3.20"
+  }
+  "monica:latest" <- Base Images
 # changelog
 changelogs:
-  - { date: "27.05.24:", desc: "Rebase to Alpine 3.20. Existing users should update their nginx confs to avoid http2 deprecation warnings."}
-  - { date: "02.05.24:", desc: "Rebase to Alpine 3.19 and PHP 8.3." }
-  - { date: "17.01.24:", desc: "Initial Release." }
+  - {date: "27.05.24:", desc: "Rebase to Alpine 3.20. Existing users should update their nginx confs to avoid http2 deprecation warnings."}
+  - {date: "02.05.24:", desc: "Rebase to Alpine 3.19 and PHP 8.3."}
+  - {date: "17.01.24:", desc: "Initial Release."}
