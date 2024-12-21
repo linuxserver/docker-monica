@@ -101,6 +101,7 @@ init_diagram: |
   "monica:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "21.12.24:", desc: "Rebase to Alpine 3.21."}
   - {date: "27.05.24:", desc: "Rebase to Alpine 3.20. Existing users should update their nginx confs to avoid http2 deprecation warnings."}
   - {date: "02.05.24:", desc: "Rebase to Alpine 3.19 and PHP 8.3."}
   - {date: "17.01.24:", desc: "Initial Release."}
