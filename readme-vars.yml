@@ -34,6 +34,8 @@ opt_param_env_vars:
   - {env_var: "TRUSTED_PROXIES", env_value: "", desc: "Set to the IP or netmask covering your reverse proxy, if running behind one. Set to `*` to trust all IPs (**do not** use `*` if exposed to the internet`)."}
   - {env_var: "APP_ENV", env_value: "local", desc: "Set to `production` when exposing the container to anyone else; this also makes https mandatory."}
   - {env_var: "APP_DISABLE_SIGNUP", env_value: "true", desc: "Set to `false` to enable new account sign-ups."}
+readonly_supported: false
+nonroot_supported: false
 # application setup block
 app_setup_block_enabled: true
 app_setup_block: |
