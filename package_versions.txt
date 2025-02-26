@@ -111,7 +111,7 @@ libmd                                    1.1.0-r0          apk
 libmemcached-libs                        1.1.4-r1          apk             
 libncursesw                              6.5_p20241006-r3  apk             
 libpng                                   1.6.44-r0         apk             
-libpq                                    17.2-r0           apk             
+libpq                                    17.4-r0           apk             
 libproc2                                 4.0.4-r2          apk             
 libpsl                                   0.21.5-r3         apk             
 libsasl                                  2.1.28-r8         apk             
@@ -218,7 +218,7 @@ phpseclib/phpseclib                      3.0.37            php-composer
 phpstan/phpdoc-parser                    1.28.0            php-composer    
 popt                                     1.19-r4           apk             
 postgresql-common                        1.2-r1            apk             
-postgresql15-client                      15.10-r0          apk             
+postgresql15-client                      15.11-r0          apk             
 pragmarx/google2fa                       v8.0.1            php-composer    
 pragmarx/google2fa-laravel               v2.2.0            php-composer    
 pragmarx/google2fa-qrcode                v3.0.0            php-composer    
