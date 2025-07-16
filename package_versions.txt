@@ -27,7 +27,7 @@ ca-certificates-bundle                   20241121-r1       apk
 carbonphp/carbon-doctrine-types          2.1.0             php-composer    
 catatonit                                0.2.0-r0          apk             
 clue/stream-filter                       v1.7.0            php-composer    
-composer                                 2.8.9             binary          
+composer                                 2.8.10            binary          
 composer/ca-bundle                       1.5.0             php-composer    
 coreutils                                9.5-r2            apk             
 coreutils-env                            9.5-r2            apk             
@@ -56,8 +56,8 @@ gdbm                                     1.24-r0           apk
 geoip2/geoip2                            v2.13.0           php-composer    
 giggsey/libphonenumber-for-php           8.13.35           php-composer    
 giggsey/locale                           2.6               php-composer    
-git                                      2.47.2-r0         apk             
-git-init-template                        2.47.2-r0         apk             
+git                                      2.47.3-r0         apk             
+git-init-template                        2.47.3-r0         apk             
 gmp                                      6.3.0-r2          apk             
 graham-campbell/manager                  v4.7.0            php-composer    
 graham-campbell/result-type              v1.1.2            php-composer    
@@ -67,8 +67,8 @@ guzzlehttp/psr7                          2.6.2             php-composer
 guzzlehttp/uri-template                  v1.0.3            php-composer    
 hashids/hashids                          4.1.0             php-composer    
 http-interop/http-factory-guzzle         1.2.0             php-composer    
-icu-data-en                              74.2-r0           apk             
-icu-libs                                 74.2-r0           apk             
+icu-data-en                              74.2-r1           apk             
+icu-libs                                 74.2-r1           apk             
 intervention/image                       2.7.2             php-composer    
 jean85/pretty-package-versions           2.0.6             php-composer    
 jq                                       1.7.1-r0          apk             
@@ -96,7 +96,7 @@ libattr                                  2.5.2-r2          apk
 libavif                                  1.0.4-r0          apk             
 libbsd                                   0.12.2-r0         apk             
 libbz2                                   1.0.8-r6          apk             
-libcrypto3                               3.3.3-r0          apk             
+libcrypto3                               3.3.4-r0          apk             
 libcurl                                  8.12.1-r1         apk             
 libdav1d                                 1.5.0-r0          apk             
 libedit                                  20240808.3.1-r0   apk             
@@ -119,7 +119,7 @@ libseccomp                               2.5.5-r1          apk
 libsharpyuv                              1.4.0-r0          apk             
 libsm                                    1.2.4-r4          apk             
 libsodium                                1.0.20-r0         apk             
-libssl3                                  3.3.3-r0          apk             
+libssl3                                  3.3.4-r0          apk             
 libstdc++                                14.2.0-r4         apk             
 libunistring                             1.2-r0            apk             
 libuuid                                  2.40.4-r1         apk             
@@ -161,7 +161,7 @@ nunomaduro/termwind                      v1.15.1           php-composer
 nyholm/psr7                              1.8.1             php-composer    
 ok/ipstack-client                        2.1               php-composer    
 oniguruma                                6.9.9-r0          apk             
-openssl                                  3.3.3-r0          apk             
+openssl                                  3.3.4-r0          apk             
 paragonie/constant_time_encoding         v2.6.3            php-composer    
 paragonie/random_compat                  v9.99.100         php-composer    
 paragonie/sodium_compat                  v1.21.1           php-composer    
