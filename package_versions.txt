@@ -27,7 +27,7 @@ ca-certificates-bundle                   20250619-r0       apk
 carbonphp/carbon-doctrine-types          2.1.0             php-composer    
 catatonit                                0.2.0-r0          apk             
 clue/stream-filter                       v1.7.0            php-composer    
-composer                                 2.8.11            binary          
+composer                                 2.8.12            binary          
 composer/ca-bundle                       1.5.0             php-composer    
 coreutils                                9.5-r2            apk             
 coreutils-env                            9.5-r2            apk             
@@ -96,12 +96,12 @@ libattr                                  2.5.2-r2          apk
 libavif                                  1.0.4-r0          apk             
 libbsd                                   0.12.2-r0         apk             
 libbz2                                   1.0.8-r6          apk             
-libcrypto3                               3.3.4-r0          apk             
+libcrypto3                               3.3.5-r0          apk             
 libcurl                                  8.12.1-r1         apk             
 libdav1d                                 1.5.0-r0          apk             
 libedit                                  20240808.3.1-r0   apk             
 libevent                                 2.1.12-r7         apk             
-libexpat                                 2.7.0-r0          apk             
+libexpat                                 2.7.3-r0          apk             
 libgcc                                   14.2.0-r4         apk             
 libice                                   1.1.1-r6          apk             
 libidn2                                  2.3.7-r0          apk             
@@ -119,7 +119,7 @@ libseccomp                               2.5.5-r1          apk
 libsharpyuv                              1.4.0-r0          apk             
 libsm                                    1.2.4-r4          apk             
 libsodium                                1.0.20-r0         apk             
-libssl3                                  3.3.4-r0          apk             
+libssl3                                  3.3.5-r0          apk             
 libstdc++                                14.2.0-r4         apk             
 libunistring                             1.2-r0            apk             
 libuuid                                  2.40.4-r1         apk             
@@ -161,7 +161,7 @@ nunomaduro/termwind                      v1.15.1           php-composer
 nyholm/psr7                              1.8.1             php-composer    
 ok/ipstack-client                        2.1               php-composer    
 oniguruma                                6.9.9-r0          apk             
-openssl                                  3.3.4-r0          apk             
+openssl                                  3.3.5-r0          apk             
 paragonie/constant_time_encoding         v2.6.3            php-composer    
 paragonie/random_compat                  v9.99.100         php-composer    
 paragonie/sodium_compat                  v1.21.1           php-composer    
